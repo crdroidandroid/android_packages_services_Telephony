@@ -1786,10 +1786,14 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         case Phone.NT_MODE_WCDMA_PREF:
         case Phone.NT_MODE_GSM_UMTS:
         case Phone.NT_MODE_GSM_ONLY:
+            //push old network to useless Settings.Global.PREFERRED_NETWORK_MODE
+            android.provider.Settings.Global.putInt(mApp.getContentResolver(),
+                    android.provider.Settings.Global.PREFERRED_NETWORK_MODE, network);
             network = Phone.NT_MODE_LTE_GSM_WCDMA;
             break;
         case Phone.NT_MODE_LTE_GSM_WCDMA:
-            network = Phone.NT_MODE_GSM_ONLY;
+            network = Settings.Global.getInt(mPhone.getContext().getContentResolver(),
+              Settings.Global.PREFERRED_NETWORK_MODE, 1);
             break;
         // GSM and CDMA devices
         case Phone.NT_MODE_GLOBAL:
