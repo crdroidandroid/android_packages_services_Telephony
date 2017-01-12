@@ -105,6 +105,8 @@
 
     <!-- For Vendor Debugging in Telephony -->
     <protected-broadcast android:name="android.telephony.action.ANOMALY_REPORTED" />
+    <protected-broadcast android:name= "org.codeaurora.VOIP_VOPS_SSAC_STATUS" />
+    <protected-broadcast android:name= "org.codeaurora.intent.action.SUBSCRIPTION_INFO_RECORD_ADDED" />
 
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
