@@ -1544,7 +1544,10 @@ public class TelephonyConnectionService extends ConnectionService {
                                      @Nullable String emergencyNumberAddress) {
         Phone chosenPhone = null;
         if (isEmergency) {
-            return PhoneFactory.getPhone(mPhoneUtilsProxy.getPhoneIdForECall());
+            int phoneId = mPhoneUtilsProxy.getPhoneIdForECall();
+            if (phoneId != -1) {
+                return PhoneFactory.getPhone(phoneId);
+            }
         }
         int subId = mPhoneUtilsProxy.getSubIdForPhoneAccountHandle(accountHandle);
         if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
