@@ -1767,11 +1767,12 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
     }
 
     public int getPreferredNetworkMode() {
+        final int phoneSubId = mSubscriptionController.getDefaultDataSubId();
+        Phone sPhone = getPhone(phoneSubId);
         int preferredNetworkMode = RILConstants.PREFERRED_NETWORK_MODE;
-        if (mPhone.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE) {
+        if (sPhone.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE) {
             preferredNetworkMode = Phone.NT_MODE_GLOBAL;
         }
-        final int phoneSubId = mPhone.getSubId();
         int network = Settings.Global.getInt(mPhone.getContext().getContentResolver(),
               Settings.Global.PREFERRED_NETWORK_MODE + phoneSubId, preferredNetworkMode);
         return network;
@@ -1817,9 +1818,11 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
             break;
         }
 
-        mPhone.setPreferredNetworkType(network,
+        final int phoneSubId = mSubscriptionController.getDefaultDataSubId();
+        Phone sPhone = getPhone(phoneSubId);
+        sPhone.setPreferredNetworkType(network,
                 mMainThreadHandler.obtainMessage(CMD_TOGGLE_LTE));
-        final int phoneSubId = mPhone.getSubId();
+
         android.provider.Settings.Global.putInt(mApp.getContentResolver(),
                 android.provider.Settings.Global.PREFERRED_NETWORK_MODE + phoneSubId, network);
 
