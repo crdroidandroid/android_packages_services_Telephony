@@ -1785,6 +1785,7 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         switch (network) {
         // GSM Devices
         case Phone.NT_MODE_WCDMA_PREF:
+        case Phone.NT_MODE_WCDMA_ONLY:
         case Phone.NT_MODE_GSM_UMTS:
         case Phone.NT_MODE_GSM_ONLY:
             //push old network to useless Settings.Global.PREFERRED_NETWORK_MODE
