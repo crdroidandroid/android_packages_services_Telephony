@@ -215,6 +215,9 @@
     <uses-permission android:name="android.permission.READ_PRECISE_PHONE_STATE" />
     <uses-permission android:name="android.permission.MANAGE_ROLE_HOLDERS" />
 
+    <!-- Needed for some qti-telephony-common jars  -->
+    <uses-permission android:name="android.permission.OVERRIDE_WIFI_CONFIG" />
+
     <uses-permission android:name="com.qti.permission.BIND_QTI_IMS_SERVICE" />
 
     <application android:name="PhoneApp"
