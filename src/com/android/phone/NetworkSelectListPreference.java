@@ -210,7 +210,7 @@ public class NetworkSelectListPreference extends ListPreference
         mNetworkScanHelper = new NetworkScanHelper(
                 mTelephonyManager, mCallback, mNetworkScanExecutor);
 
-        setSummary(mTelephonyManager.getNetworkOperatorName());
+        setSummary(mTelephonyManager.getNetworkOperatorName(mSubId));
 
         setOnPreferenceChangeListener(this);
     }
