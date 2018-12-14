@@ -75,7 +75,7 @@ public class GsmUmtsOptions {
     protected void update(final int subId) {
         boolean addAPNExpand = true;
         boolean addNetworkOperatorsCategory = true;
-        boolean addCarrierSettings = true;
+        boolean addCarrierSettings = false;
         final TelephonyManager telephonyManager = TelephonyManager.from(mPrefFragment.getContext())
                 .createForSubscriptionId(subId);
         if (telephonyManager.getPhoneType() != PhoneConstants.PHONE_TYPE_GSM) {
