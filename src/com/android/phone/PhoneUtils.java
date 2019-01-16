@@ -99,7 +99,7 @@ public class PhoneUtils {
      * because these dialogs are displayed using the application context, which does not resolve
      * the dialog theme correctly.
      */
-    private static final int THEME = com.android.internal.R.style.Theme_DeviceDefault_Dialog_Alert;
+    private static final int THEME = com.android.internal.R.style.Theme_DeviceDefault_Light_Dialog_Alert;
     /** Extra key to identify the service class voice or video */
     public static final String SERVICE_CLASS = "service_class";
 
