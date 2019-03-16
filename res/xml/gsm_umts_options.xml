@@ -36,6 +36,10 @@
             android:key="button_choose_network_key"
             android:title="@string/choose_network_title"
             android:fragment="com.android.phone.NetworkSelectSetting" />
+
+        <Preference
+            android:key="button_alternative_manual_network_select"
+            android:title="@string/choose_network_title" />
     </com.android.phone.NetworkOperators>
 
     <!--We want separate APN setting from reset of settings because-->

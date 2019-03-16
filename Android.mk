@@ -49,6 +49,10 @@ LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags sip/proguard.flags
 
+ifeq ($(TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT),true)
+LOCAL_REQUIRED_MODULES := CustomNetworkSettings
+endif
+
 include frameworks/base/packages/SettingsLib/common.mk
 
 include $(BUILD_PACKAGE)
