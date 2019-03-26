@@ -194,6 +194,7 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
     private static final int EVENT_GET_FORBIDDEN_PLMNS_DONE = 49;
     private static final int CMD_SWITCH_SLOTS = 50;
     private static final int EVENT_SWITCH_SLOTS_DONE = 51;
+    private static final int CMD_TOGGLE_LTE = 99; // not used yet
 
     // Parameters of select command.
     private static final int SELECT_COMMAND = 0xA4;
@@ -1200,6 +1201,68 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         intent.putExtra(SUBSCRIPTION_KEY, subId);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mApp.startActivity(intent);
+    }
+
+        public int getPreferredNetworkMode() {
+        final int phoneSubId = mSubscriptionController.getDefaultDataSubId();
+        Phone sPhone = getPhone(phoneSubId);
+        int preferredNetworkMode = RILConstants.PREFERRED_NETWORK_MODE;
+        if (sPhone.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE) {
+            preferredNetworkMode = Phone.NT_MODE_GLOBAL;
+        }
+        int network = Settings.Global.getInt(mPhone.getContext().getContentResolver(),
+              Settings.Global.PREFERRED_NETWORK_MODE + phoneSubId, preferredNetworkMode);
+        return network;
+    }
+
+    public void toggleLTE(boolean on) {
+        int network = getPreferredNetworkMode();
+        boolean isCdmaDevice = mPhone.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE;
+
+        switch (network) {
+        // GSM Devices
+        case Phone.NT_MODE_WCDMA_PREF:
+        case Phone.NT_MODE_WCDMA_ONLY:
+        case Phone.NT_MODE_GSM_UMTS:
+        case Phone.NT_MODE_GSM_ONLY:
+            //push old network to useless Settings.Global.PREFERRED_NETWORK_MODE
+            android.provider.Settings.Global.putInt(mApp.getContentResolver(),
+                    android.provider.Settings.Global.PREFERRED_NETWORK_MODE, network);
+            network = Phone.NT_MODE_LTE_GSM_WCDMA;
+            break;
+        case Phone.NT_MODE_LTE_GSM_WCDMA:
+            network = Settings.Global.getInt(mPhone.getContext().getContentResolver(),
+              Settings.Global.PREFERRED_NETWORK_MODE, 1);
+            break;
+        // GSM and CDMA devices
+        case Phone.NT_MODE_GLOBAL:
+            // Wtf to do here?
+            network = Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA;
+            break;
+        case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
+            // Determine the correct network type
+            if (isCdmaDevice) {
+                network = Phone.NT_MODE_CDMA;
+            } else {
+                network = Phone.NT_MODE_WCDMA_PREF;
+            }
+            break;
+        // CDMA Devices
+        case Phone.NT_MODE_CDMA:
+            network = Phone.NT_MODE_LTE_CDMA_AND_EVDO;
+            break;
+        case Phone.NT_MODE_LTE_CDMA_AND_EVDO:
+            network = Phone.NT_MODE_CDMA;
+            break;
+        }
+
+        final int phoneSubId = mSubscriptionController.getDefaultDataSubId();
+        Phone sPhone = getPhone(phoneSubId);
+        sPhone.setPreferredNetworkType(network,
+                mMainThreadHandler.obtainMessage(CMD_TOGGLE_LTE));
+        android.provider.Settings.Global.putInt(mApp.getContentResolver(),
+                android.provider.Settings.Global.PREFERRED_NETWORK_MODE + phoneSubId, network);
+
     }
 
     public void toggle2G(boolean on) {
