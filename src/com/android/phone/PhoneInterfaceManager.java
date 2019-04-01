@@ -1256,6 +1256,37 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         case Phone.NT_MODE_LTE_CDMA_AND_EVDO:
             network = Phone.NT_MODE_CDMA;
             break;
+        // TDSCDMA Devices
+        case Phone.NT_MODE_LTE_TDSCDMA_GSM_WCDMA:
+            network = Phone.NT_MODE_TDSCDMA_GSM_WCDMA;
+            break;
+        case Phone.NT_MODE_TDSCDMA_GSM_WCDMA:
+            network = Phone.NT_MODE_LTE_TDSCDMA_GSM_WCDMA;
+            break;
+        case Phone.NT_MODE_LTE_TDSCDMA_WCDMA:
+            network = Phone.NT_MODE_TDSCDMA_WCDMA;
+            break;
+        case Phone.NT_MODE_TDSCDMA_WCDMA:
+            network = Phone.NT_MODE_LTE_TDSCDMA_WCDMA;
+            break;
+        case Phone.NT_MODE_LTE_TDSCDMA_GSM:
+            network = Phone.NT_MODE_TDSCDMA_GSM;
+            break;
+        case Phone.NT_MODE_TDSCDMA_GSM:
+            network = Phone.NT_MODE_LTE_TDSCDMA_GSM;
+            break;
+        case Phone.NT_MODE_LTE_TDSCDMA:
+            network = Phone.NT_MODE_TDSCDMA_ONLY;
+            break;
+        case Phone.NT_MODE_TDSCDMA_ONLY:
+            network = Phone.NT_MODE_LTE_TDSCDMA;
+            break;
+        case Phone.NT_MODE_LTE_TDSCDMA_CDMA_EVDO_GSM_WCDMA:
+            network = Phone.NT_MODE_TDSCDMA_CDMA_EVDO_GSM_WCDMA;
+            break;
+        case Phone.NT_MODE_TDSCDMA_CDMA_EVDO_GSM_WCDMA:
+            network = Phone.NT_MODE_LTE_TDSCDMA_CDMA_EVDO_GSM_WCDMA;
+            break;
         }
 
         final int phoneSubId = mSubscriptionController.getDefaultDataSubId();
