@@ -20,4 +20,7 @@
     <color name="actionbar_background_color">@android:color/transparent</color>
     <!-- Dark variant of the action bar color.  Ensure this stays in sync with Dialer version. -->
     <color name="actionbar_background_color_dark">@android:color/transparent</color>
+    <color name="dialer_background_color">#ff1e1f22</color>
+    <color name="dialer_primary_text_color">#ffffff</color>
+    <color name="dialer_secondary_text_color">#ffffff</color>
 </resources>
