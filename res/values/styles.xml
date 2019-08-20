@@ -180,6 +180,8 @@
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:colorAccent">@color/dialer_theme_color</item>
         <item name="android:dialogTheme">@style/DialerAlertDialogTheme</item>
+        <!-- Preference category -->
+        <item name="android:preferenceCategoryStyle">@style/SettingsPreferenceCategory2</item>
     </style>
 
     <style name="DialerAlertDialogTheme"
@@ -262,7 +264,7 @@
            parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
         <item name="android:textColor">@color/dialer_primary_text_color</item>
         <item name="android:textSize">@dimen/dialer_head1_font_size</item>
-        <item name="android:fontFamily">sans-serif-regular</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
     </style>
 
     <!-- Action bar overflow menu icon. -->
@@ -381,5 +383,12 @@
         <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/emergency_shortcut_tap_hint_text_size</item>
+    </style>
+
+    <style name="TextAppearanceCategoryTitle" parent="@*android:style/TextAppearance.DeviceDefault.Body2">>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">11sp</item>
+        <!-- 0.8 Spacing, 0.8/11 = 0.072727273 -->
+        <item name="android:letterSpacing">0.072727273</item>
     </style>
 </resources>
