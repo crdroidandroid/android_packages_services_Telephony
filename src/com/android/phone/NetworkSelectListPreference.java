@@ -415,18 +415,40 @@ public class NetworkSelectListPreference extends ListPreference
             // confusing mcc/mnc.
             List<CharSequence> networkEntriesList = new ArrayList<>();
             List<CharSequence> networkEntryValuesList = new ArrayList<>();
+            List<CharSequence> forbiddenEntryValuesList = new ArrayList<>();
+            List<CharSequence> forbiddenEntriesList = new ArrayList<>();
+            List<CellInfo> sortedCellInfos = new ArrayList<>();
+            List<CellInfo> forbiddenCellInfos = new ArrayList<>();
             for (CellInfo cellInfo: mCellInfoList) {
                 // Display each operator name only once.
                 String networkTitle = getNetworkTitle(cellInfo);
+                String operator = getOperatorNumeric(cellInfo);
+                String uniqueOperator = operator;
+                int i = 1;
+                while (networkEntryValuesList.contains(uniqueOperator) ||
+                        forbiddenEntryValuesList.contains(uniqueOperator)) {
+                    uniqueOperator = operator + "_" + i;
+                    i++;
+                }
                 if (!networkEntriesList.contains(networkTitle)) {
                     if (CellInfoUtil.isForbidden(cellInfo, mForbiddenPlmns)) {
                         networkTitle += " "
                                 + getContext().getResources().getString(R.string.forbidden_network);
+                        forbiddenEntriesList.add(networkTitle);
+                        forbiddenEntryValuesList.add(uniqueOperator);
+                        forbiddenCellInfos.add(cellInfo);
+                    } else {
+                        networkEntriesList.add(networkTitle);
+                        networkEntryValuesList.add(uniqueOperator);
+                        sortedCellInfos.add(cellInfo);
                     }
-                    networkEntriesList.add(networkTitle);
-                    networkEntryValuesList.add(getOperatorNumeric(cellInfo));
                 }
             }
+            // append forbidden networks so they are displayed last
+            networkEntriesList.addAll(forbiddenEntriesList);
+            networkEntryValuesList.addAll(forbiddenEntryValuesList);
+            sortedCellInfos.addAll(forbiddenCellInfos);
+            mCellInfoList = sortedCellInfos;
             setEntries(networkEntriesList.toArray(new CharSequence[networkEntriesList.size()]));
             setEntryValues(networkEntryValuesList.toArray(
                     new CharSequence[networkEntryValuesList.size()]));
