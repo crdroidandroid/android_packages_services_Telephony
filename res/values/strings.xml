@@ -1461,7 +1461,7 @@
 
     <!-- String resource for the font-family to use for the call setting activity's title
          Do not translate. -->
-    <string name="call_settings_title_font_family">sans-serif-light</string>
+    <string name="call_settings_title_font_family">@*android:string/config_headlineFontFamily</string>
 
     <!-- Label for PSTN connection service. -->
     <string name="pstn_connection_service_label">Built-in SIM cards</string>
