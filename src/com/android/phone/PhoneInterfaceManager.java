@@ -3588,7 +3588,8 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
      */
     @Override
     public int getDataNetworkType(String callingPackage) {
-        return getDataNetworkTypeForSubscriber(getDefaultSubscription(), callingPackage);
+        return getDataNetworkTypeForSubscriber(mSubscriptionController.getDefaultDataSubId(),
+                callingPackage);
     }
 
     /**
@@ -5416,15 +5417,25 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
     public boolean isRttEnabled(int subscriptionId) {
         final long identity = Binder.clearCallingIdentity();
         try {
+            int phoneId = SubscriptionManager.getPhoneId(subscriptionId);
+            if (!SubscriptionManager.isValidPhoneId(phoneId)) {
+                loge("phoneId " + phoneId + " is not valid.");
+                return false;
+            }
             boolean isRttSupported = isRttSupported(subscriptionId);
             boolean isUserRttSettingOn = Settings.Secure.getInt(
-                    mApp.getContentResolver(), Settings.Secure.RTT_CALLING_MODE, 0) != 0;
+                    mApp.getContentResolver(),
+                    Settings.Secure.RTT_CALLING_MODE + convertRttPhoneId(phoneId) , 0) != 0;
             boolean shouldIgnoreUserRttSetting = mApp.getCarrierConfigForSubId(subscriptionId)
                     .getBoolean(CarrierConfigManager.KEY_IGNORE_RTT_MODE_SETTING_BOOL);
             return isRttSupported && (isUserRttSettingOn || shouldIgnoreUserRttSetting);
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
+    }
+
+    private static String convertRttPhoneId(int phoneId) {
+        return phoneId != 0 ? Integer.toString(phoneId) : "";
     }
 
     /**
@@ -5559,6 +5570,13 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
                     UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
                 setUserDataEnabled(subId, getDefaultDataEnabled());
                 setNetworkSelectionModeAutomatic(subId);
+                // Set preferred mobile network type to the best available
+
+                String defaultNetworkMode = TelephonyManager.getTelephonyProperty(
+                        mSubscriptionController.getPhoneId(subId),
+                        "ro.telephony.default_network", null);
+                int networkType = !TextUtils.isEmpty(defaultNetworkMode)
+                        ? Integer.parseInt(defaultNetworkMode) : Phone.PREFERRED_NT_MODE;
                 setPreferredNetworkType(subId, getDefaultNetworkType(subId));
                 setDataRoamingEnabled(subId, getDefaultDataRoamingEnabled(subId));
                 CarrierInfoManager.deleteAllCarrierKeysForImsiEncryption(mApp);
