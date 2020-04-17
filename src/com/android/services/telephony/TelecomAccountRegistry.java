@@ -1213,12 +1213,13 @@ public class TelecomAccountRegistry {
                                 TelephonyProperties.PROPERTY_INECM_MODE, "false"));
                         boolean isAccountAdded = false;
 
-                        if (mTelephonyManager.getPhoneCount() > 1) {
-                            if (getIExtTelephony() != null) {
+                        IExtTelephony mExtTelephony = getIExtTelephony();
+
+                        if (mExtTelephony != null && mTelephonyManager.getPhoneCount() > 1) {
                                 try {
                                     //get current provision state of the SIM.
                                     provisionStatus =
-                                            getIExtTelephony().getCurrentUiccCardProvisioningStatus(slotId);
+                                            mExtTelephony.getCurrentUiccCardProvisioningStatus(slotId);
                                 } catch (RemoteException ex) {
                                     Log.w(this, "Failed to get status , slotId: "+ slotId +" Exception: "
                                             + ex);
@@ -1226,7 +1227,6 @@ public class TelecomAccountRegistry {
                                     Log.w(this, "Failed to get status , slotId: "+ slotId +" Exception: "
                                             + ex);
                                 }
-			                }
                         }
 
                         // In SSR case, UiccCard's would be disposed hence the provision state received as

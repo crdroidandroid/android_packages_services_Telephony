@@ -1386,8 +1386,7 @@ public class PhoneUtils {
     public static boolean isNetworkSettingsApkAvailable() {
         // check whether the target handler exist in system
         boolean isVendorNetworkSettingApkAvailable = false;
-        IExtTelephony extTelephony =
-                IExtTelephony.Stub.asInterface(ServiceManager.getService("extphone"));
+        IExtTelephony extTelephony = getIExtTelephony();
         try {
             if (extTelephony != null &&
                     extTelephony.isVendorApkAvailable("com.qualcomm.qti.networksetting")) {
