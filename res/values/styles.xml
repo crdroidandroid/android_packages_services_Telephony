@@ -177,7 +177,8 @@
 
     <style name="SettingsLight" parent="android:Theme.Material.Light">
         <item name="android:forceDarkAllowed">true</item>
-        <item name="android:windowBackground">@color/phone_settings_background_color</item>
+        <item name="android:colorBackground">@color/dialer_background_color</item>
+        <item name="android:colorBackgroundFloating">@android:color/white</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/DialtactsActionBarStyle</item>
         <item name="android:actionMenuTextColor">@color/phone_settings_actionbar_text_color</item>
@@ -191,14 +192,6 @@
     </style>
 
     <style name="DialerSettingsLight" parent="SettingsLight">
-        <!-- Action bar.-->
-        <item name="android:windowBackground">@color/dialer_background_color</item>
-        <item name="android:actionModeBackground">@color/dialer_background_color</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <!-- Navigation bar.-->
-        <item name="android:navigationBarColor">@color/dialer_background_color</item>
-        <item name="android:navigationBarDividerColor">@color/dialer_divider_color</item>
-        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:colorAccent">@color/dialer_theme_color</item>
         <item name="android:dialogTheme">@style/DialerAlertDialogTheme</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow</item>
@@ -240,7 +233,7 @@
     <!-- Text in the action bar at the top of the screen.  Should be kept in sync with Dialer. -->
     <style name="DialtactsActionBarTitleText"
            parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/dialer_primary_text_color</item>
+        <item name="android:textColor">@color/phone_settings_actionbar_text_color</item>
         <item name="android:textSize">@dimen/dialer_head1_font_size</item>
         <item name="android:fontFamily">sans-serif-regular</item>
     </style>
