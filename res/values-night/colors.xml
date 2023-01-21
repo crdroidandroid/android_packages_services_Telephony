@@ -25,4 +25,9 @@
     <color name="emergency_shortcut_confirm_phone_type_icon_color">#f28b82</color>
     <color name="emergency_call_icon_color">#e8eaed</color>
     <color name="emergency_dialpad_fab_tint_color">#f28b82</color>
+
+    <color name="dialer_theme_color">#5195EA</color>
+    <color name="dialer_theme_color_dark">#2374CE</color>
+    <color name="dialer_background_color">@*android:color/primary_dark_material_settings</color>
+    <color name="google_grey_800">@*android:color/material_grey_800</color>
 </resources>

@@ -411,7 +411,7 @@ public class SipSettings extends PreferenceActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuItem addAccountMenuItem = menu.add(0, MENU_ADD_ACCOUNT, 0, R.string.add_sip_account);
-        addAccountMenuItem.setIcon(R.drawable.ic_add_gnu_grey);
+        addAccountMenuItem.setIcon(R.drawable.ic_add_24dp);
         addAccountMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
