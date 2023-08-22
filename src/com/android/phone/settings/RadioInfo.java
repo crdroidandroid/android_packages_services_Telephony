@@ -117,13 +117,15 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+
 /**
  * Radio Information Class
  *
  * Allows user to read and alter some of the radio related information.
  *
  */
-public class RadioInfo extends AppCompatActivity {
+public class RadioInfo extends CollapsingToolbarBaseActivity {
     private static final String TAG = "RadioInfo";
 
     private static final boolean IS_USER_BUILD = "user".equals(Build.TYPE);
