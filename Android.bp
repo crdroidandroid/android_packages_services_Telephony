@@ -43,6 +43,7 @@ android_app {
         "guava",
         "PlatformProperties",
         "modules-utils-fastxmlserializer",
+        "SettingsLib",
         "modules-utils-os",
         "nist-sip",
         "service-entitlement",
