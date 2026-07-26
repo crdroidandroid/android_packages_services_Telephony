@@ -1576,13 +1576,14 @@ public final class SimPhonebookProviderTest {
                 SubscriptionManager subscriptionManager,
                 IIccPhoneBook iccPhoneBook,
                 ContentNotifier notifier) {
-            TestableSimPhonebookProvider provider =
-                    (TestableSimPhonebookProvider) Objects.requireNonNull(
-                            resolver.acquireContentProviderClient(
-                                    SimPhonebookContract.AUTHORITY))
-                            .getLocalContentProvider();
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(() ->
-                    provider.onCreate(subscriptionManager, () -> iccPhoneBook, notifier));
+            try (android.content.ContentProviderClient client = Objects.requireNonNull(
+                    resolver.acquireContentProviderClient(
+                            SimPhonebookContract.AUTHORITY))) {
+                TestableSimPhonebookProvider provider =
+                        (TestableSimPhonebookProvider) client.getLocalContentProvider();
+                InstrumentationRegistry.getInstrumentation().runOnMainSync(() ->
+                        provider.onCreate(subscriptionManager, () -> iccPhoneBook, notifier));
+            }
         }
 
         @Override

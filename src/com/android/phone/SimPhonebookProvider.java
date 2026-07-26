@@ -134,6 +134,7 @@ public class SimPhonebookProvider extends ContentProvider {
     private SubscriptionManager mSubscriptionManager;
     private Supplier<IIccPhoneBook> mIccPhoneBookSupplier;
     private ContentNotifier mContentNotifier;
+    private SubscriptionManager.OnSubscriptionsChangedListener mSubscriptionsChangedListener;
 
     static int efIdForEfType(@ElementaryFiles.EfType int efType) {
         switch (efType) {
@@ -190,12 +191,14 @@ public class SimPhonebookProvider extends ContentProvider {
     @TestApi
     boolean onCreate(@NonNull SubscriptionManager subscriptionManager,
             Supplier<IIccPhoneBook> iccPhoneBookSupplier, ContentNotifier notifier) {
+        if (mSubscriptionManager != null && mSubscriptionsChangedListener != null) {
+            mSubscriptionManager.removeOnSubscriptionsChangedListener(mSubscriptionsChangedListener);
+        }
         mSubscriptionManager = subscriptionManager;
         mIccPhoneBookSupplier = iccPhoneBookSupplier;
         mContentNotifier = notifier;
 
-        mSubscriptionManager.addOnSubscriptionsChangedListener(MoreExecutors.directExecutor(),
-                new SubscriptionManager.OnSubscriptionsChangedListener() {
+        mSubscriptionsChangedListener = new SubscriptionManager.OnSubscriptionsChangedListener() {
                     boolean mFirstCallback = true;
                     private int[] mNotifiedSubIds = {};
 
@@ -211,8 +214,18 @@ public class SimPhonebookProvider extends ContentProvider {
                             mNotifiedSubIds = Arrays.copyOf(activeSubIds, activeSubIds.length);
                         }
                     }
-                });
+                };
+        mSubscriptionManager.addOnSubscriptionsChangedListener(MoreExecutors.directExecutor(),
+                mSubscriptionsChangedListener);
         return true;
+    }
+
+    @Override
+    public void shutdown() {
+        if (mSubscriptionManager != null && mSubscriptionsChangedListener != null) {
+            mSubscriptionManager.removeOnSubscriptionsChangedListener(mSubscriptionsChangedListener);
+        }
+        super.shutdown();
     }
 
     @Nullable
