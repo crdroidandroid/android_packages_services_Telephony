@@ -675,7 +675,7 @@
     <string name="voicemail_visual_voicemail_switch_title" msgid="6610414098912832120">"Визуальная голосовая почта"</string>
     <string name="voicemail_set_pin_dialog_title" msgid="7005128605986960003">"Установка PIN-кода"</string>
     <string name="voicemail_change_pin_dialog_title" msgid="4633077715231764435">"Изменение PIN-кода"</string>
-    <string name="preference_category_ringtone" msgid="8787281191375434976">"Рингтон и вибросигнал"</string>
+    <string name="preference_category_ringtone" msgid="8787281191375434976">"Вызов и вибросигнал"</string>
     <string name="pstn_connection_service_label" msgid="9200102709997537069">"Встроенные SIM-карты"</string>
     <string name="enable_video_calling_title" msgid="7246600931634161830">"Включить видеовстречи"</string>
     <string name="enable_video_calling_dialog_msg" msgid="7141478720386203540">"Чтобы включить видеовызовы, активируйте режим 4G LTE в настройках сети."</string>
